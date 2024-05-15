@@ -14,10 +14,10 @@ image.addEventListener("load", () => {
 
   const imageData = ctx.getImageData(0, 0, image.width, image.height);
 
-  ctx.clearRect(0, 0, image.width, image.height)
-
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     for(let i = 0; i < imageData.data.length; i+=4){
+      if(imageData.data[i+3] != 0){
         imageArr.push({
           r: imageData.data[i],
           g: imageData.data[i+1],
@@ -26,10 +26,18 @@ image.addEventListener("load", () => {
           x: Math.floor((i/4))%image.width,
           y: Math.floor(Math.floor((i/4))/image.width),
         })
+      }
     }
 
-    imageArr.forEach((el)=>{
-      ctx.fillStyle = `rgba(${el.r},${el.g},${el.b},${el.a})`;
-      ctx.fillRect(el.x, el.y, 1, 1)
-    })
+    setInterval(()=>{
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      
+      imageArr.forEach((el)=>{
+        ctx.fillStyle = `rgba(${el.r},${el.g},${el.b},${el.a})`;
+        ctx.fillRect(el.x, el.y, 1, 1)
+
+        el.x++
+        el.y++
+      })
+    },17)
 });
