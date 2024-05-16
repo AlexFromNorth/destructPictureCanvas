@@ -23,21 +23,30 @@ image.addEventListener("load", () => {
           g: imageData.data[i+1],
           b: imageData.data[i+2],
           a: imageData.data[i+3],
-          x: Math.floor((i/4))%image.width,
+          x: Math.floor((i/4))%image.width  ,
           y: Math.floor(Math.floor((i/4))/image.width),
+          vX: random(),
+          vY: random(),
         })
       }
     }
-
-    setInterval(()=>{
+    (function drawCanvas(){
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       
       imageArr.forEach((el)=>{
         ctx.fillStyle = `rgba(${el.r},${el.g},${el.b},${el.a})`;
         ctx.fillRect(el.x, el.y, 1, 1)
 
-        el.x++
-        el.y++
+        el.x += el.vX
+        el.y += el.vY
+
+        if(el.x >= canvas.width -1 || el.x <= 0){
+          el.vX = -el.vX
+        }
+        if(el.y >= canvas.height -1 || el.y <= 0){
+          el.vY = -el.vY
+        }
       })
-    },17)
+      requestAnimationFrame(drawCanvas)
+    }())
 });
