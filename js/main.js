@@ -2,10 +2,10 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
 const image = new Image();
-image.src = "test.jpg";
+image.src = "png.png";
 
-canvas.width = image.width * 1.5
-canvas.height = image.height * 1.5
+canvas.width = image.width
+canvas.height = image.height 
 
 const imageArr = []
 
